@@ -5,8 +5,6 @@ pojawiaay si¦ na zmian¦.
 
 import random
 
-# TODO: Correct this function or create new one while I've created this one, the way it only takes the longest list length opposite to just taking sum of the lengths
-
 def mergeOnSecond(listA, listB):
     listC = []
     if len(listA) > len(listB):
@@ -49,4 +47,20 @@ def mergeOnSecond(listA, listB):
                         listC.append(listA[i])
     return listC
 
+def mergeOnSecondVersionTwo(listA, listB):
+    listC = []
+    iteratorA = 0
+    iteratorB = 0
+    for i in range(len(listA) + len(listB)):
+        if i % 2 != 0:
+            listC.append(listB[iteratorB])
+            iteratorB += 1
+        else:
+            listC.append(listA[iteratorA])
+            iteratorA += 1
+    return listC
+
+
+
 print(mergeOnSecond([1,2,3,4,5],[6,7,8,9,10]))
+print(mergeOnSecondVersionTwo([1,2,3,4,5],[6,7,8,9,10]))

@@ -1,12 +1,46 @@
 """
-2. Dany jest plik, gdzie w ka»dej linii znajduje si¦ saowo. Nale»y sprawdzi¢, czy dane
-
-saowo jest palindromem, a nast¦pnie do pliku csv zapisa¢ dla ka»dego saowa nast¦pu-
-j¡ce dane: liczba porz¡dkowa, saowo, wypisa¢ wszystkie znaki znajduj¡ce si¦ w tym
-
-saowie, wpisa¢ true  je»eli saowo jest palindromem i false, je»eli nie jest. Przykaad
-poni»ej:
+2. Dany jest plik, gdzie w kazdej linii znajduje się słowo. Nalezy sprawdzic, czy dane
+slowo jest palindromem, a nastepnie do pliku csv zapisac dla kazdego saowa następu-
+j¡ce dane: liczba porzadkowa, słowo, wypisac wszystkie znaki znajdujace się w tym
+słowie, wpisać true jezeli słowo jest palindromem i false, je»eli nie jest. Przykaad
+ponizej:
 • aabcbaa > 1, aabcbaa, abc, true;
 • AabbaA > 2, AabbaA, Aab, true;
 • alamakota > 3,alamakota, almkot, false.
 """
+import csv
+import pprint as pp
+
+def isPalindrome(word):
+    return word == word[::-1]
+
+def allCharacters(word):
+    charactersInWord = []
+    for char in word: 
+        if char in charactersInWord:
+            pass
+        else:
+            charactersInWord.append(char)
+    return ''.join(charactersInWord)
+
+def palindromSearcher(fileName):
+    file = open(fileName)
+
+    toCSVList = []
+    index = 0
+
+    for row in file:
+        if isPalindrome(row.replace('\n', '')):
+            toCSVList.append([index,row.replace('\n', ''),allCharacters(row.replace('\n', '')),True])
+            index += 1
+        else:
+            toCSVList.append([index,row.replace('\n', ''),allCharacters(row.replace('\n', '')),False])
+            index += 1
+
+    file.close()
+    file = open(fileName + '.csv', 'w', newline='')
+
+    for row in toCSVList:
+        csv.writer(file).writerow(row)
+    file.close()
+palindromSearcher("./data/sampleWords.txt")

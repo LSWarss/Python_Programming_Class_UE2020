@@ -11,11 +11,11 @@ def randomEverythingListGenerator(arrayLenght):
     randomEverythingItemsList = []
     for _ in range(arrayLenght):
         randomTypePicker = round(random.random(),2)
-        if randomTypePicker >= 0.00 and randomTypePicker <= 0.24:
+        if randomTypePicker >= 0.00 and randomTypePicker < 0.25:
             randomEverythingItemsList.append(get_random_string(random.randint(0,arrayLenght)))
-        elif randomTypePicker >= 0.25 and randomTypePicker <= 0.49:
+        elif randomTypePicker >= 0.25 and randomTypePicker < 0.5:
             randomEverythingItemsList.append(round(random.random(),2))
-        elif randomTypePicker >= 0.50 and randomTypePicker <= 0.74:
+        elif randomTypePicker >= 0.5 and randomTypePicker < 0.75:
             randomEverythingItemsList.append(random.randint(0, arrayLenght))
         else:
             randomEverythingItemsList.append(bool(random.randint(0,1)))

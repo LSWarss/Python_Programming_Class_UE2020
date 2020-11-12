@@ -15,6 +15,23 @@ Nale»y do nowego pliku csv wpisa¢: Apr 2018 : -0.12 (czyli 0.28 +12.12 - 2.67 
 """
 import csv
 import pprint as pp
+import numpy as np
+import pandas as pd
+import enum
+
+class Months(enum.Enum):
+    Jan = 1
+    Feb = 2
+    Mar = 3
+    Apr = 4
+    May = 5
+    Jun = 6
+    Jul = 7
+    Aug = 8
+    Sep = 9
+    Oct = 10
+    Nov = 11
+    Dec = 12
 
 
 def formatData(fileName):
@@ -33,13 +50,16 @@ def formatData(fileName):
         placeholder = placeholder.split(' ')
         formatedData.append(placeholder)
 
-    pp.pprint(formatedData)
-    return formatData
+
+    return formatedData
 
 #TODO: Implement function going through the formated data and calculating the returns
-def lastMonthsRetun(fileName):
-    formatedData = formatData(fileName)
+def lastMonthsRetu§n(fileName):
+    formatedDataArray = np.array(formatData(fileName))
+    df = pd.DataFrame(formatedDataArray)
+    print(df)
 
-
+    
 
 formatData("./data/APC Historical Data.csv")
+lastMonthsRetun("./data/APC Historical Data.csv")

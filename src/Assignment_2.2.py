@@ -60,7 +60,7 @@ def palindromSearcher(fileName):
             index += 1
 
     file.close()
-    file = open(fileName + '.csv', 'w', newline='')
+    file = open(fileName[:-4] + '.csv', 'w', newline='')
 
     for row in toCSVList:
         csv.writer(file).writerow(row)

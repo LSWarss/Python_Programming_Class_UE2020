@@ -35,6 +35,14 @@ class Months(enum.Enum):
 
 
 def formatData(fileName):
+    """Simple data formatting function, to format given data for something computer readable
+
+    Args:
+        fileName (csv file): Specific csv file given in assignment, with Company's stock price indexed
+
+    Returns:
+        Numpy array : Formatted numpy array 
+    """
     file = open(fileName)
     data = []
     formatedData = []
@@ -50,16 +58,42 @@ def formatData(fileName):
         placeholder = placeholder.split(' ')
         formatedData.append(placeholder)
 
+    numpyFormattedArray = np.array(formatedData)
+    return numpyFormattedArray
 
-    return formatedData
+def lastMonthsRetun(array):
+    """Function taking the formatter data array and then converting it to dataFrame, with aim to find returns data we are interested in
 
-#TODO: Implement function going through the formated data and calculating the returns
-def lastMonthsRetu§n(fileName):
-    formatedDataArray = np.array(formatData(fileName))
-    df = pd.DataFrame(formatedDataArray)
-    print(df)
+    Args:
+        array (Numpy array): Numpy array
+    """
+    df = pd.DataFrame(array)
+    placeholderArray = []
+    df.columns=['Month','Day','Year','Return']
+    df['Return'] = pd.to_numeric(df['Return'])
+    for year in df['Year'].unique():
+        for month in Months:
+            returnsSumForSpecificMonth = df.loc[(df.Month == month.name) & (df.Year == year)]
+            # print(returnsSumForSpecificMonth['Return'])
+            placeholderArray.append([month.name, year, ":", calculateReturn(returnsSumForSpecificMonth['Return'])])
 
-    
+    pp.pprint(placeholderArray)
+    file = open('returns.csv', 'w', newline='')
 
-formatData("./data/APC Historical Data.csv")
-lastMonthsRetun("./data/APC Historical Data.csv")
+    for row in placeholderArray:
+        csv.writer(file).writerow(row)
+    file.close()
+
+def calculateReturn(arrayOfReturns):
+    """Simple calculation of returns function to make code more readable
+
+    Args:
+        arrayOfReturns ([Float]): Array of retuns from specific month
+
+    Returns:
+        Float : Returns sum devided by 5
+    """
+    return round((sum(arrayOfReturns)/5),2)
+
+
+lastMonthsRetun(formatData("/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv"))

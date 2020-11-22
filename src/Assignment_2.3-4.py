@@ -38,10 +38,10 @@ def formatData(fileName):
     """Simple data formatting function, to format given data for something computer readable
 
     Args:
-        fileName (csv file): Specific csv file given in assignment, with Company's stock price indexed
+        fileName(String) : Specific csv file given in assignment, with Company's stock price indexed
 
     Returns:
-        Numpy array : Formatted numpy array 
+        Numpy Array : Formatted numpy array 
     """
     file = open(fileName)
     data = []
@@ -61,12 +61,16 @@ def formatData(fileName):
     numpyFormattedArray = np.array(formatedData)
     return numpyFormattedArray
 
-def lastMonthsRetun(array):
+def lastMonthsRetun(fileName):
     """Function taking the formatter data array and then converting it to dataFrame, with aim to find returns data we are interested in
 
     Args:
-        array (Numpy array): Numpy array
+        fileName (String): File we want to have the data from 
+
+    Returns:
+        Float : Returns sum devided by 5
     """
+    array = formatData(fileName)
     df = pd.DataFrame(array)
     placeholderArray = []
     df.columns=['Month','Day','Year','Return']
@@ -74,18 +78,31 @@ def lastMonthsRetun(array):
     for year in df['Year'].unique():
         for month in Months:
             returnsSumForSpecificMonth = df.loc[(df.Month == month.name) & (df.Year == year)]
-            # print(returnsSumForSpecificMonth['Return'])
             placeholderArray.append([month.name, year, ":", calculateReturn(returnsSumForSpecificMonth['Return'])])
 
-    pp.pprint(placeholderArray)
     file = open('returns.csv', 'w', newline='')
 
     for row in placeholderArray:
         csv.writer(file).writerow(row)
     file.close()
 
+    newdf = pd.DataFrame(np.array(placeholderArray),columns=['Month','Year', 'Separator','Return'])
+    return newdf
+
+def showData(month, year, fileName):
+    """ Function for showing Data for specific month and year
+
+    Args:
+        month (String): Month we want to search for
+        year (String): Year we want to search for
+        fileName (String): FileName we want the data from
+    """
+    df = lastMonthsRetun(fileName)
+    print(df.loc[(df.Month == month) & (df.Year == year)])
+
+
 def calculateReturn(arrayOfReturns):
-    """Simple calculation of returns function to make code more readable
+    """Function for calculation of returns function to make code more readable
 
     Args:
         arrayOfReturns ([Float]): Array of retuns from specific month
@@ -96,4 +113,11 @@ def calculateReturn(arrayOfReturns):
     return round((sum(arrayOfReturns)/5),2)
 
 
-lastMonthsRetun(formatData("/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv"))
+lastMonthsRetun("/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv")
+
+"""
+4. Dla pliku z poprzedniego zadania wy±wietl na ekranie dane tylko dla miesi¡ca i roku
+podanego przez u»ytkownika.
+"""
+
+showData('Jan','2018', "/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv")

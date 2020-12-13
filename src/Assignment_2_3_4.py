@@ -113,11 +113,11 @@ def calculateReturn(arrayOfReturns):
     return round((sum(arrayOfReturns)/5),2)
 
 
-lastMonthsRetun("/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv")
+#lastMonthsRetun("/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv")
 
 """
 4. Dla pliku z poprzedniego zadania wy±wietl na ekranie dane tylko dla miesi¡ca i roku
 podanego przez u»ytkownika.
 """
 
-showData('Jan','2018', "/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv")
+#showData('Jan','2018', "/Users/lukaszstachnik/Workspace/Python_Programming_Class_UE2020/src/data/APC Historical Data.csv")
